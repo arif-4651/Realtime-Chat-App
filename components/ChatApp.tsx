@@ -36,9 +36,17 @@ export default function ChatApp({ user, onLogout }: ChatAppProps) {
 
   useEffect(() => {
     // Initialize socket connection
-    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000')
+    // For Vercel: Set NEXT_PUBLIC_SOCKET_URL environment variable to your Socket.io server URL
+    // Example: https://your-socket-server.railway.app
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3001'
+    
+    console.log('Connecting to Socket.io server:', socketUrl)
+    
     const newSocket = io(socketUrl, {
       transports: ['websocket', 'polling'],
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionAttempts: 5,
     })
 
     newSocket.on('connect', () => {

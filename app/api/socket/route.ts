@@ -1,6 +1,9 @@
-// This file is kept for reference but Socket.io server runs via server.js
-// For Vercel deployment, consider using a separate Socket.io server or a service like Pusher
+import { NextRequest } from 'next/server'
+import { Server as SocketIOServer } from 'socket.io'
+import { Server as HTTPServer } from 'http'
 
-export async function GET() {
-  return new Response('Socket.IO server is running via custom server', { status: 200 })
+// Note: Vercel doesn't support persistent WebSocket connections in serverless functions
+// This is a placeholder. For production, deploy socket-server.js separately on Railway/Render
+export async function GET(request: NextRequest) {
+  return new Response('Socket.IO server should be deployed separately', { status: 200 })
 }
